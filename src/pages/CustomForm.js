@@ -179,9 +179,9 @@ const CustomForm = memo((props) => {
             case 5:
                 heading = "Review and Submit"
                 return (
-                    <div>
-                        <p>Please review your information before submitting:</p>
-                        <ul>
+                    <div className='mb-2 text-xs font-medium'>
+                        <p className='text-[13px]'>Please review your information before submitting:</p>
+                        <ul className='ml-8 my-4 list-disc'>
                             <li>
                                 <strong>Image Uploaded:</strong>{" "}
                                 {formData.image ? "✓" : "✗"}
@@ -223,7 +223,7 @@ const CustomForm = memo((props) => {
     // Return the JSX for the component using Tailwind CSS for styling
     return (
         <div className="mt-10 mb-36">
-            <h1 className="text-6xl mb-36 font-medium">GPT4 vision API Web App</h1>
+            <h1 className="text-6xl mb-28 font-medium">GPT4 vision API Web App</h1>
             <div className="flex justify-center items-center h-full">
                 <motion.div
                     className="m-6 p-5 flex flex-col items-center justify-center rounded-3xl shadow-[1px_1px_12px_1px_rgba(219,219,219,1)] max-w-72 w-full relative"
@@ -267,7 +267,7 @@ const CustomForm = memo((props) => {
                             </button>
                         )}
                         {currentStep === 5 && (
-                            <button onClick={handleSubmit} className="w-32 h-10 bg-gray-900 text-white rounded-full cursor-pointer text-lg font-bold">
+                            <button onClick={handleSubmit} className="w-40 h-9 bg-gray-900 text-white rounded-full cursor-pointer text-lg font-bold">
                                 Submit
                             </button>
                         )}

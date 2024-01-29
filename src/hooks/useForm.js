@@ -83,8 +83,9 @@ export const useForm = (initialFormData, initialSavedData) => {
             },
         ]
 
+
         // Send the form data to the Replit server
-        fetch("https://test-1-aistylista.replit.app/analyze", {
+        fetch("https://127.0.0.1:5000/analyze", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
