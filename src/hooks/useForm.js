@@ -1,5 +1,7 @@
 // useForm.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import globalContext from '../context/global/globalContext';
+import modalContext from '../context/modal/modalContext';
 
 export const useForm = (initialFormData, initialSavedData) => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -9,6 +11,8 @@ export const useForm = (initialFormData, initialSavedData) => {
     const [savedFormData, setSavedFormData] = useState(
         initialSavedData || JSON.parse(localStorage.getItem("formData")) || {}
     );
+    const { setIsLoading } = useContext(globalContext);
+    const { closeModal, openModal } = useContext(modalContext);
 
     useEffect(() => {
         localStorage.setItem("formData", JSON.stringify(savedFormData));
@@ -62,50 +66,44 @@ export const useForm = (initialFormData, initialSavedData) => {
     }
 
     const handleSubmit = () => {
-        // Construct the message data
-        const messages = [
-            { role: "system", content: "You are a helpful assistant." },
-            { role: "user", content: "Analyze the following data:" },
-            { role: "assistant", content: "Category: Photo" },
-            { role: "user", content: "Here is the uploaded image:" },
-            { role: "assistant", content: formData.image },
-            { role: "assistant", content: "Category: Hair Color" },
-            {
-                role: "user",
-                content: "The hair color is " + formData.hairColor,
-            },
-            { role: "assistant", content: "Category: Eye Color" },
-            { role: "user", content: "The eye color is " + formData.eyeColor },
-            { role: "assistant", content: "Category: Comments" },
-            {
-                role: "user",
-                content: "Additional comments: " + formData.comments,
-            },
-        ]
-        console.log("formdata", formData.image)
+        
         const sendFormData = new FormData();
         sendFormData.append('image', formData.image)
         sendFormData.append('hair_color', formData.hairColor)
         sendFormData.append('eye_color', formData.eyeColor)
         sendFormData.append('comments', formData.comments)
+        setIsLoading(true)
+        fetch('http://localhost:5000/analyze', {
+                method: 'POST',
+                body: sendFormData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            setIsLoading(false)
 
+            openModal(
+                () => {
+                    <p>Modal</p>
+                },
+                data.description,
+                "ddd",
+                () => {
+                    closeModal();
+                },
+                () => {
+                    closeModal();
+                }
+            );
+        })
+        .catch(error => console.error('Error:', error));
+    
 
-
-        fetch('http://localhost:5000/base64_analyze', {
-            method: 'POST',
-            body: sendFormData,
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // },
-            // body: JSON.stringify({
-            //     image_url: formData.image,
-            //     text_prompt: JSON.stringify(messages),
-            // })
-            })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-
+        
         // Clear form data and localStorage
         setSavedFormData({})
         localStorage.removeItem("formData")
@@ -115,7 +113,6 @@ export const useForm = (initialFormData, initialSavedData) => {
         const pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
         return pattern.test(email)
     }
-    // Additional functions like handleImageChange, nextStep, etc...
 
     return {
         currentStep,

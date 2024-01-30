@@ -101,7 +101,7 @@ const CustomForm = memo((props) => {
                                 name="eyeColor"
                                 placeholder="Enter eye color"
                                 onChange={handleInputChange}
-                                className='h-9 w-full border rounded-lg px-2'
+                                className='h-9 w-full border rounded-lg p-2'
                                 required
                                 value={
                                     formData.eyeColor ||
@@ -125,7 +125,7 @@ const CustomForm = memo((props) => {
                                 name="comments"
                                 placeholder="Your comments"
                                 onChange={handleInputChange}
-                                className='h-9 w-full border rounded-lg px-2'
+                                className='h-9 w-full border rounded-lg p-2'
                                 value={
                                     formData.comments ||
                                     savedFormData.comments ||
@@ -222,9 +222,10 @@ const CustomForm = memo((props) => {
 
     // Return the JSX for the component using Tailwind CSS for styling
     return (
-        <div className="mt-10 mb-36">
-            <h1 className="text-6xl mb-28 font-medium">GPT4 vision API Web App</h1>
-            <div className="flex justify-center items-center h-full">
+        <div className="md:mt-10 md:mb-36">
+            <h1 className="text-2xl mt-4 mb-1 md:text-6xl md:mb-8 font-medium text-center">Discover Your Color Season</h1>
+            <h1 className="text-2xl mb-4 md:text-6xl md:mb-28 font-medium text-center">For Free</h1>
+            <div className="flex justify-center items-center h-full mb-4">
                 <motion.div
                     className="m-6 p-5 flex flex-col items-center justify-center rounded-3xl shadow-[1px_1px_12px_1px_rgba(219,219,219,1)] max-w-72 w-full relative"
                     style={{ backgroundColor: props.tint }}
