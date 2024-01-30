@@ -73,7 +73,7 @@ export const useForm = (initialFormData, initialSavedData) => {
         sendFormData.append('eye_color', formData.eyeColor)
         sendFormData.append('comments', formData.comments)
         setIsLoading(true)
-        fetch('http://localhost:5000/analyze', {
+        fetch('https://color-season.onrender.com/analyze', {
                 method: 'POST',
                 body: sendFormData,
         })
