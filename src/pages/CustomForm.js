@@ -227,7 +227,7 @@ const CustomForm = memo((props) => {
             <h1 className="text-2xl mb-4 md:text-6xl md:mb-28 font-medium text-center">For Free</h1>
             <div className="flex justify-center items-center h-full mb-4">
                 <motion.div
-                    className="m-6 p-5 flex flex-col items-center justify-center rounded-3xl shadow-[1px_1px_12px_1px_rgba(219,219,219,1)] max-w-72 w-full relative"
+                    className="m-6 p-5 flex flex-col items-center justify-center rounded-3xl shadow-[1px_1px_12px_1px_rgba(219,219,219,1)] max-w-72 md:max-w-96 w-full relative"
                     style={{ backgroundColor: props.tint }}
                 >
                     <div className="flex justify-center items-center overflow-hidden w-full max-h-300px rounded-lg mb-5">

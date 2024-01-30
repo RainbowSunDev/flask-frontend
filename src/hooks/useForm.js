@@ -101,8 +101,6 @@ export const useForm = (initialFormData, initialSavedData) => {
             );
         })
         .catch(error => console.error('Error:', error));
-    
-
         
         // Clear form data and localStorage
         setSavedFormData({})
@@ -125,6 +123,5 @@ export const useForm = (initialFormData, initialSavedData) => {
         nextStep,
         previousStep,
         handleSubmit
-        // Export other handlers as needed
     };
 };
