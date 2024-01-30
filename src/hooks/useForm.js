@@ -82,34 +82,29 @@ export const useForm = (initialFormData, initialSavedData) => {
                 content: "Additional comments: " + formData.comments,
             },
         ]
+        console.log("formdata", formData.image)
+        const sendFormData = new FormData();
+        sendFormData.append('image', formData.image)
+        sendFormData.append('hair_color', formData.hairColor)
+        sendFormData.append('eye_color', formData.eyeColor)
+        sendFormData.append('comments', formData.comments)
 
 
-        // Send the form data to the Replit server
-        fetch("https://127.0.0.1:5000/analyze", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                image_url: formData.image,
-                text_prompt: JSON.stringify(messages), // Convert messages to JSON string
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok")
-                }
-                return response.json()
+
+        fetch('http://localhost:5000/base64_analyze', {
+            method: 'POST',
+            body: sendFormData,
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // },
+            // body: JSON.stringify({
+            //     image_url: formData.image,
+            //     text_prompt: JSON.stringify(messages),
+            // })
             })
-            .then((data) => {
-                // Handle the response from the server as needed
-                console.log(data)
-            })
-            .catch((error) => {
-                console.error("Error sending form data:", error)
-                // Handle the error and return an error response
-                console.log({ error: error.message })
-            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
 
         // Clear form data and localStorage
         setSavedFormData({})

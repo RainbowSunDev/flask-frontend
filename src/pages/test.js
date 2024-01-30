@@ -98,7 +98,7 @@ export default function CustomForm(props) {
         fetch("https://test-1-aistylista.replit.app/analyze", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 image_url: formData.image,
