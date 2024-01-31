@@ -38,7 +38,6 @@ const CustomForm = memo((props) => {
     ]
     // Render functions and other component logic...
     const renderFormStep = () => {
-        console.log(props.overlayImage)
         let heading = ""
         switch (currentStep) {
             case 1:

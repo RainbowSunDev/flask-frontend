@@ -2,7 +2,9 @@
 import { useState, useEffect, useContext } from 'react';
 import globalContext from '../context/global/globalContext';
 import modalContext from '../context/modal/modalContext';
+import { isValid } from 'mailchecker'
 
+const fetch_url = process.env.REACT_APP_SERVER_FETCH_URL
 export const useForm = (initialFormData, initialSavedData) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState(initialFormData);
@@ -30,6 +32,7 @@ export const useForm = (initialFormData, initialSavedData) => {
     };
 
     const handleImageChange = (event) => {
+
         const file = event.target.files[0]
         setFormData({ ...formData, image: file })
 
@@ -41,6 +44,8 @@ export const useForm = (initialFormData, initialSavedData) => {
     }
 
     const nextStep = () => {
+        console.log(isValidEmail(formData.email))
+        console.log(formData.email)
         if (currentStep === 1 && !formData.image) {
             setValidationError("Please upload an image to continue.")
             return
@@ -52,6 +57,9 @@ export const useForm = (initialFormData, initialSavedData) => {
             return
         } else if (currentStep === 4 && (!formData.name || !formData.email)) {
             setValidationError("Please fill in all fields.")
+            return
+        } else if (currentStep === 4 && !isValidEmail(formData.email)) {
+            setValidationError("Please enter valid email.")
             return
         }
 
@@ -72,7 +80,7 @@ export const useForm = (initialFormData, initialSavedData) => {
         sendFormData.append('eye_color', formData.eyeColor)
         sendFormData.append('comments', formData.comments)
         setIsLoading(true)
-        fetch('https://color-season.onrender.com/analyze', {
+        fetch(`${fetch_url}`, {
                 method: 'POST',
                 body: sendFormData,
         })
