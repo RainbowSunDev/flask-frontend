@@ -6,7 +6,7 @@ import modalContext from '../context/modal/modalContext';
 export const useForm = (initialFormData, initialSavedData) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState(initialFormData);
-    const [uploadedImage, setUploadedImage] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState(initialFormData.image);
     const [validationError, setValidationError] = useState("");
     const [savedFormData, setSavedFormData] = useState(
         initialSavedData || JSON.parse(localStorage.getItem("formData")) || {}
@@ -17,7 +17,6 @@ export const useForm = (initialFormData, initialSavedData) => {
     useEffect(() => {
         localStorage.setItem("formData", JSON.stringify(savedFormData));
     }, [savedFormData]);
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         if (name === "email") {

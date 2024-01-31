@@ -2,11 +2,12 @@
 import React, { memo } from 'react';
 import { useForm } from '../hooks/useForm'; // Import the custom hook
 import { motion } from "framer-motion"
+import previewImage from '../assets/preview.webp'
 
 const CustomForm = memo((props) => {
     // Initialize form state
     const initialFormData = {
-        image: null,
+        image: previewImage,
         hairColor: "",
         eyeColor: "",
         comments: "",
@@ -26,7 +27,6 @@ const CustomForm = memo((props) => {
         nextStep,
         previousStep,
         handleSubmit
-        // Add other methods returned from the custom hook
     } = useForm(initialFormData);
 
     const sectionTitles = [
@@ -38,6 +38,7 @@ const CustomForm = memo((props) => {
     ]
     // Render functions and other component logic...
     const renderFormStep = () => {
+        console.log(props.overlayImage)
         let heading = ""
         switch (currentStep) {
             case 1:
